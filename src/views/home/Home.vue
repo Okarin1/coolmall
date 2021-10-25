@@ -1,23 +1,29 @@
 <template>
   <div>
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-    <h1>home</h1>
-    <li v-for="i in banners">{{i.title}}</li>
-    <li v-for="i in recommends">{{i.title}}</li>
+    <home-swiper :banners = "banners"/>
+<!--    <li v-for="i in banners">{{i.title}}</li>-->
+<!--    <li v-for="i in recommends">{{i.title}}</li>-->
   </div>
 </template>
 
 <script>
 import NavBar from "@/components/common/navbar/NavBar";
+import HomeSwiper from "./childComps/HomeSwiper";
+
+
 import {getHomeMultidata} from "@/network/home";
+
+
 export default {
   name: "Home",
   components:{
-    NavBar
+    HomeSwiper,
+    NavBar,
   },
   data(){
     return{
-       banners:[],
+      banners:[],
       recommends:[]
     }
   },
@@ -37,4 +43,6 @@ export default {
   font-size: large;
   font-weight: bold;
 }
+
+
 </style>
