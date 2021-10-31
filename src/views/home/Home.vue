@@ -1,14 +1,21 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-    <home-swiper :banners="banners"/>
-    <recommend-view :recommends="recommends" />
-    <feature-view/>
-    <tab-control  class="tab-control"
-                  :titles="['流行', '新款', '精选']"
-                  @tabClick="tabClick"
-    ></tab-control>
-    <goods-list :goods="showGoods"/>
+
+    <scroll class="content" ref="scroll">
+      <div>
+        <home-swiper :banners="banners"/>
+        <recommend-view :recommends="recommends" />
+        <feature-view/>
+        <tab-control  class="tab-control"
+                      :titles="['流行', '新款', '精选']"
+                      @tabClick="tabClick"
+        ></tab-control>
+        <goods-list :goods="showGoods"/>
+      </div>
+    </scroll>
+    <back-top @click.native="backClick"/>
+
 
 
   </div>
@@ -21,11 +28,13 @@ import HomeSwiper from "./childComps/HomeSwiper";
 import RecommendView from "./childComps/RecommendView";
 import FeatureView from "@/views/home/childComps/FeatureView";
 
+
 // 公共组件
 import NavBar from "@/components/common/navbar/NavBar";
 import TabControl from "@/components/content/tabControl/TabControl";
 import GoodsList from "@/components/content/goods/GoodsList";
-
+import Scroll from "@/components/common/scroll/Scroll";
+import BackTop from "@/components/content/backTop/BackTop";
 
 import {getHomeMultidata,getHomeGoods} from "@/network/home";
 
@@ -37,10 +46,12 @@ export default {
     RecommendView,
     HomeSwiper,
     FeatureView,
+    Scroll,
 
     NavBar,
     TabControl,
-    GoodsList
+    GoodsList,
+    BackTop
 
   },
   data(){
@@ -87,6 +98,10 @@ export default {
 
     tabClick(index){
       this.currertIndex = index
+    },
+
+    backClick() {
+      this.$refs.scroll.scroll.scrollTo(0,0,500)
     }
 
   }
@@ -116,5 +131,14 @@ export default {
   z-index:9;
 }
 
+
+.content {
+  overflow: hidden;
+  position: absolute;
+  top: 44px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
+}
 
 </style>
