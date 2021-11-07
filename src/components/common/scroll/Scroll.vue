@@ -41,10 +41,11 @@ export default {
       click: true,
       probeType:this.probeType,
     })
-
-    this.scroll.on('scroll',(position) =>{
-      this.$emit('scroll-position',position)
+  if (this.probeType === 2|| this.probeType ===3) {
+    this.scroll.on('scroll', (position) => {
+      this.$emit('scroll-position', position)
     })
+  }
 
     this.scroll.on('pullingUp',() =>{
       this.$emit('pulling-up')

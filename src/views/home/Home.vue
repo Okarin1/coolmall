@@ -1,20 +1,25 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-
+    <tab-control  class="tab-control"
+                  :titles="['流行', '新款', '精选']"
+                  @tabClick="tabClick"
+                  ref="tabControl1"
+                  v-show="isTabFixed"/>
     <scroll class="content" ref="scroll"
             :probe-type="3"
             @scroll-position="contentScroll"
             :pull-up-load="true"
             @pulling-up="loadMore">
       <div>
-        <home-swiper :banners="banners"/>
+        <home-swiper :banners="banners"
+                     @swiper-image-load="swiperImageLoad"/>
         <recommend-view :recommends="recommends" />
         <feature-view/>
         <tab-control  class="tab-control"
                       :titles="['流行', '新款', '精选']"
                       @tabClick="tabClick"
-        ></tab-control>
+                      ref="tabControl2"/>
         <goods-list :goods="showGoods"/>
       </div>
     </scroll>
@@ -69,7 +74,9 @@ export default {
       },
       currertType:['pop','new','sell'],
       currertIndex:0,
-      isShowBackTop: false
+      isShowBackTop: false,
+      topOffsetTop:0,
+      isTabFixed:false
     }
   },
   created() {
@@ -104,16 +111,22 @@ export default {
 
     tabClick(index){
       this.currertIndex = index
+      this.$refs.tabControl1.currertIndex = index
+      this.$refs.tabControl2.currertIndex = index
     },
 
     backClick() {
       this.$refs.scroll.scrollTo(0,0,500)
     },
     contentScroll(position){
-      this.isShowBackTop =  -position.y > 1000
+      this.isShowBackTop =  (-position.y) > 1000
+      this.isTabFixed = (-position.y)>this.topOffsetTop
       },
     loadMore() {
       this.getHomeGoods(this.currertType[this.currertIndex])
+    },
+    swiperImageLoad(){
+      this.topOffsetTop = this.$refs.tabControl2.$el.offsetTop;
     }
 
 
@@ -125,18 +138,20 @@ export default {
 
 <style scoped>
 #home{
-  padding-top: 44px;
+  /*padding-top: 44px;*/
+  height: 100vh;
+  position: relative;
 }
 .home-nav{
   background-color: var(--color-tint);
   color: white;
   font-size: large;
   font-weight: bold;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 9;
+  /*position: fixed;*/
+  /*left: 0;*/
+  /*right: 0;*/
+  /*top: 0;*/
+  /*z-index: 9;*/
 }
 .tab-control{
   position:sticky;
@@ -153,5 +168,11 @@ export default {
   left: 0;
   right: 0;
 }
+/*.fixed{*/
+/*  position: fixed;*/
+/*  left: 0;*/
+/*  right: 0;*/
+/*  top: 44px;*/
+/*}*/
 
 </style>
