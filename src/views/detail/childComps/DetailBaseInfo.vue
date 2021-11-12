@@ -4,7 +4,7 @@
     <div class="info-price">
       <span class="n-price">{{goods.newPrice}}</span>
       <span class="o-price">{{goods.oldPrice}}</span>
-      <span class="discount">{{goods.discount}}</span>
+      <span class="discount" :style="{backgroundColor:goods.discountBgColor}">{{goods.discount}}</span>
     </div>
     <div class="info-other">
       <span>{{goods.columns[0]}}</span>
@@ -49,7 +49,7 @@
 
   .info-price .n-price {
     font-size: 24px;
-    color: var(--color-high-text);
+    color: red;
   }
 
   .info-price .o-price {
@@ -62,7 +62,6 @@
     font-size: 12px;
     padding: 2px 5px;
     color: #fff;
-    background-color: var(--color-high-text);
     border-radius: 8px;
     margin-left: 5px;
 

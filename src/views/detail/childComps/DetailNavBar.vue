@@ -43,6 +43,8 @@
   .detail-nav {
     background-color: #fff;
     font-weight: normal;
+    position: relative;
+    z-index: 9;
   }
 
   .title {

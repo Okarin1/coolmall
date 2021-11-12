@@ -165,8 +165,7 @@ export default {
   position: absolute;
   top: 44px;
   bottom: 49px;
-  left: 0;
-  right: 0;
+
 }
 /*.fixed{*/
 /*  position: fixed;*/
